@@ -7,6 +7,10 @@ export var potencia_motor:int = 20
 export var potencia_rotacion:int = 280
 
 
+## ATRIBUTOS ONREADY
+onready var canion:Canion = $Canion
+
+
 ## ATRIBUTOS
 var empuje:Vector2 = Vector2.ZERO
 var dir_rotacion:int = 0
@@ -45,3 +49,11 @@ func player_input() -> void:
 	elif Input.is_action_pressed("rotar_antihorario"):
 		# Rotacion en sentido antihorario
 		dir_rotacion -= 1
+
+	# Disparo
+	if Input.is_action_pressed("disparo_principal"):
+		# Cambio de variable booleana al presionar boton
+		canion.set_esta_disparando(true)
+	if Input.is_action_just_released("disparo_principal"):
+		# Cambio de variable booleanda al soltar el boton
+		canion.set_esta_disparando(false)

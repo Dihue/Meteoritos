@@ -14,6 +14,7 @@ onready var laser:RayoLaser = $LaserBeam2D
 onready var estela_centro:Estela = $PuntoInicioCentro/Trail2D
 onready var estela_izquierda:Estela = $PuntoInicioIzquierda/Trail2D
 onready var estela_derecha:Estela = $PuntoInicioDerecha/Trail2D
+onready var motor_sfx:Motor = $MotorSFX
 
 
 ## ATRIBUTOS
@@ -31,17 +32,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Al soltar el evento presionaado, desactiva el laser
 		laser.set_is_casting(false)
 	
-	# Control de las estelas
+	# Control de las estelas y sonido motor
 	if event.is_action_pressed("mover_adelante"):
-		# Longitud yendo hacia adelante
+		# Longitud estela, yendo hacia adelante
 		estela_centro.set_max_points(estela_maxima)
 		estela_izquierda.set_max_points(estela_maxima - 100)
 		estela_derecha.set_max_points(estela_maxima - 100)
+		# Sonido del motor avanzando
+		motor_sfx.sonido_on()
 	elif event.is_action_pressed("mover_atras"):
-		# Longitud yendo hacia atras
+		# Longitud estela, yendo hacia atras
 		estela_centro.set_max_points(0)
 		estela_izquierda.set_max_points(0)
 		estela_derecha.set_max_points(0)
+		# Sonido del motor retrocediendo
+		motor_sfx.sonido_on()
+	
+	# Control del sonido del motor para apagarlo
+	if (event.is_action_released("mover_adelante")
+	 or event.is_action_released("mover_atras")):
+		motor_sfx.sonido_off()
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:

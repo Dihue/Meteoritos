@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/proyectil_player_sfx.ogg-198787910376fe7ae174c49697ca44b6.oggstr"
+
+[deps]
+
+source_file="res://Juego/Proyectiles/proyectil_player_sfx.ogg"
+dest_files=[ "res://.import/proyectil_player_sfx.ogg-198787910376fe7ae174c49697ca44b6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

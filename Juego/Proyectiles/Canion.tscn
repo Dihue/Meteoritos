@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Juego/Proyectiles/Canion.gd" type="Script" id=1]
-[ext_resource path="res://Juego/Proyectiles/Proyectil.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Juego/Proyectiles/proyectil_player_sfx.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Juego/Proyectiles/Base/Proyectil.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Juego/Proyectiles/Base/proyectil_sfx.ogg" type="AudioStream" id=3]
 
 [node name="Canion" type="Node2D"]
 script = ExtResource( 1 )

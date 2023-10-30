@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/proyectil_player.png-8a75fb3fe704194265ac4d29dac439a9.stex"
+path="res://.import/Ship_icono.png-987588048ce83af4b734257c4e903616.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Juego/Proyectiles/proyectil_player.png"
-dest_files=[ "res://.import/proyectil_player.png-8a75fb3fe704194265ac4d29dac439a9.stex" ]
+source_file="res://Ship_icono.png"
+dest_files=[ "res://.import/Ship_icono.png-987588048ce83af4b734257c4e903616.stex" ]
 
 [params]
 

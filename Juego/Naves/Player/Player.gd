@@ -5,11 +5,15 @@ extends RigidBody2D
 ## ATRIBUTOS EXPORT
 export var potencia_motor:int = 20
 export var potencia_rotacion:int = 280
+export var estela_maxima:int = 120
 
 
 ## ATRIBUTOS ONREADY
 onready var canion:Canion = $Canion
 onready var laser:RayoLaser = $LaserBeam2D
+onready var estela_centro:Estela = $PuntoInicioCentro/Trail2D
+onready var estela_izquierda:Estela = $PuntoInicioIzquierda/Trail2D
+onready var estela_derecha:Estela = $PuntoInicioDerecha/Trail2D
 
 
 ## ATRIBUTOS
@@ -26,6 +30,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("disparo_secundario"):
 		# Al soltar el evento presionaado, desactiva el laser
 		laser.set_is_casting(false)
+	
+	# Control de las estelas
+	if event.is_action_pressed("mover_adelante"):
+		# Longitud yendo hacia adelante
+		estela_centro.set_max_points(estela_maxima)
+		estela_izquierda.set_max_points(estela_maxima - 100)
+		estela_derecha.set_max_points(estela_maxima - 100)
+	elif event.is_action_pressed("mover_atras"):
+		# Longitud yendo hacia atras
+		estela_centro.set_max_points(0)
+		estela_izquierda.set_max_points(0)
+		estela_derecha.set_max_points(0)
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:

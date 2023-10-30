@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Juego/Naves/Player/player_ship_green.png" type="Texture" id=1]
 [ext_resource path="res://Juego/Naves/Player/MaterialFisica.tres" type="PhysicsMaterial" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Juego/Proyectiles/Canion.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Juego/Proyectiles/Laser/LaserBeam2D.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Juego/Proyectiles/Player/ProyectilPlayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Juego/Naves/Player/Estela/Trail2D.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 37.0
@@ -23,6 +24,7 @@ script = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
 rotation = 1.5708
 texture = ExtResource( 1 )
 
@@ -38,5 +40,32 @@ position = Vector2( 0, 36 )
 
 [node name="LaserBeam2D" parent="." instance=ExtResource( 5 )]
 position = Vector2( 38, 0 )
+
+[node name="PuntoInicioCentro" type="Position2D" parent="."]
+position = Vector2( -37, 0 )
+
+[node name="Trail2D" parent="PuntoInicioCentro" instance=ExtResource( 7 )]
+points = PoolVector2Array( 0, 0, 60, 0 )
+width = 20.0
+lifetime = 0.6
+target_path = NodePath("..")
+
+[node name="PuntoInicioIzquierda" type="Position2D" parent="."]
+position = Vector2( -19, -42 )
+
+[node name="Trail2D" parent="PuntoInicioIzquierda" instance=ExtResource( 7 )]
+points = PoolVector2Array( 0, 0, 60, 0 )
+width = 10.0
+lifetime = 0.6
+target_path = NodePath("..")
+
+[node name="PuntoInicioDerecha" type="Position2D" parent="."]
+position = Vector2( -19, 41 )
+
+[node name="Trail2D" parent="PuntoInicioDerecha" instance=ExtResource( 7 )]
+points = PoolVector2Array( 0, 0, 60, 0 )
+width = 10.0
+lifetime = 0.6
+target_path = NodePath("..")
 
 [editable path="Canion"]

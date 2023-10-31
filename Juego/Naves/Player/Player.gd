@@ -93,6 +93,8 @@ func controlar_estados(nuevo_estado: int) -> void:
 		ESTADO.MUERTO:
 			colisionador.set_deferred("disabled", true)
 			canion.set_puede_disparar(false)
+			# Emite la señal que viene del Autoload
+			Eventos.emit_signal("nave_destruida", global_position, 3)
 			queue_free()
 		_:
 			printerr("Error de estado")
@@ -139,6 +141,10 @@ func esta_input_activo() -> bool:
 		return false
 	
 	return true
+
+
+func destruir() -> void:
+	controlar_estados(ESTADO.MUERTO)
 
 
 ## SEÑALES INTERNAS

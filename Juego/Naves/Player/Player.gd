@@ -1,6 +1,9 @@
 class_name Player
 extends RigidBody2D
 
+## ENUMS
+enum ESTADO {SPAWN, VIVO, INVENCIBLE, MUERTO}
+
 
 ## ATRIBUTOS EXPORT
 export var potencia_motor:int = 20
@@ -15,15 +18,25 @@ onready var estela_centro:Estela = $PuntoInicioCentro/Trail2D
 onready var estela_izquierda:Estela = $PuntoInicioIzquierda/Trail2D
 onready var estela_derecha:Estela = $PuntoInicioDerecha/Trail2D
 onready var motor_sfx:Motor = $MotorSFX
+onready var colisionador:CollisionShape2D = $ColisionadorNave
 
 
 ## ATRIBUTOS
 var empuje:Vector2 = Vector2.ZERO
 var dir_rotacion:int = 0
+var estado_actual:int = ESTADO.SPAWN
 
 
 ## METODOS
+func _ready() -> void:
+	pass
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	# Control del estado actual de la nave
+	if not esta_input_activo():
+		return
+	
 	# Disparo rayo
 	if event.is_action_pressed("disparo_secundario"):
 		# Al detectar el evento presionado, activa el laser
@@ -66,7 +79,32 @@ func _process(delta: float) -> void:
 
 
 ## METODOS CUSTOM
+func controlar_estados(nuevo_estado: int) -> void:
+	# Control de los distintos estados de la nave
+	match nuevo_estado:
+		ESTADO.SPAWN:
+			colisionador.set_deferred("disabled", true)
+			canion.set_puede_disparar(false)
+		ESTADO.VIVO:
+			colisionador.set_deferred("disabled", false)
+			canion.set_puede_disparar(true)
+		ESTADO.INVENCIBLE:
+			colisionador.set_deferred("disabled", true)
+		ESTADO.MUERTO:
+			colisionador.set_deferred("disabled", true)
+			canion.set_puede_disparar(false)
+			queue_free()
+		_:
+			printerr("Error de estado")
+
+	estado_actual = nuevo_estado
+
+
 func player_input() -> void:
+	# Control del estado actual de la nave
+	if not esta_input_activo():
+		return
+	
 	# Empuje
 	empuje = Vector2.ZERO
 	# Control para el empuje de la nave
@@ -94,3 +132,16 @@ func player_input() -> void:
 	if Input.is_action_just_released("disparo_principal"):
 		# Cambio de variable booleanda al soltar el boton
 		canion.set_esta_disparando(false)
+
+
+func esta_input_activo() -> bool:
+	if estado_actual in [ESTADO.MUERTO, ESTADO.SPAWN]:
+		return false
+	
+	return true
+
+
+## SEÑALES INTERNAS
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	if anim_name == "spawn":
+		controlar_estados(ESTADO.VIVO)

@@ -9,6 +9,7 @@ enum ESTADO {SPAWN, VIVO, INVENCIBLE, MUERTO}
 export var potencia_motor:int = 20
 export var potencia_rotacion:int = 280
 export var estela_maxima:int = 120
+export var hitpoints:float = 15.0
 
 
 ## ATRIBUTOS ONREADY
@@ -18,6 +19,7 @@ onready var estela_centro:Estela = $PuntoInicioCentro/Trail2D
 onready var estela_izquierda:Estela = $PuntoInicioIzquierda/Trail2D
 onready var estela_derecha:Estela = $PuntoInicioDerecha/Trail2D
 onready var motor_sfx:Motor = $MotorSFX
+onready var impacto_sfx:AudioStreamPlayer = $ImpactoSFX
 onready var colisionador:CollisionShape2D = $ColisionadorNave
 
 
@@ -141,6 +143,15 @@ func esta_input_activo() -> bool:
 		return false
 	
 	return true
+
+
+func recibir_danio(danio: float) -> void:
+	hitpoints -= danio
+
+	if hitpoints <= 0.0:
+		destruir()
+	
+	impacto_sfx.play()
 
 
 func destruir() -> void:

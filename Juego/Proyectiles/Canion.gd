@@ -37,7 +37,7 @@ func _ready() -> void:
 	tiempo_enfriamiento.wait_time = cadencia_disparo
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Chequeo cuadro a cuadro de las condiciones para disparar
 	if esta_disparando and esta_enfriado:
 		disparar()

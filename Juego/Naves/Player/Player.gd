@@ -74,14 +74,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		escudo.activar()
 
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	# Para el manejo de la rotacion del RigidBody
 	apply_torque_impulse(dir_rotacion * potencia_rotacion)
 	# Para el manejo del empuje de un RigidBody (adelante/atras)
 	apply_central_impulse(empuje.rotated(rotation))
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_input()
 
 

@@ -35,7 +35,7 @@ func _on_disparo(proyectil:Proyectil) -> void:
 
 
 func _on_nave_destruida(posicion: Vector2, num_explosiones: int) -> void:
-	for i in range(num_explosiones):
+	for _i in range(num_explosiones):
 		# Variable que se le asigna una instancia de la explosion
 		var new_explosion:Node2D = explosion.instance()
 		# Asignar la posicion de la nave para la explosion

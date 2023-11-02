@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/impacto_proyectil.ogg-19e18c449c5e8ce97c4712b77ca94bc5.oggstr"
+
+[deps]
+
+source_file="res://Juego/Naves/Player/impacto_proyectil.ogg"
+dest_files=[ "res://.import/impacto_proyectil.ogg-19e18c449c5e8ce97c4712b77ca94bc5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

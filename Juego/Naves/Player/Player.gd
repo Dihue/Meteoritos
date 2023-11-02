@@ -9,6 +9,7 @@ enum ESTADO {SPAWN, VIVO, INVENCIBLE, MUERTO}
 export var potencia_motor:int = 20
 export var potencia_rotacion:int = 280
 export var estela_maxima:int = 120
+export var hitpoints:float = 15.0
 
 
 ## ATRIBUTOS ONREADY
@@ -18,7 +19,9 @@ onready var estela_centro:Estela = $PuntoInicioCentro/Trail2D
 onready var estela_izquierda:Estela = $PuntoInicioIzquierda/Trail2D
 onready var estela_derecha:Estela = $PuntoInicioDerecha/Trail2D
 onready var motor_sfx:Motor = $MotorSFX
+onready var impacto_sfx:AudioStreamPlayer = $ImpactoSFX
 onready var colisionador:CollisionShape2D = $ColisionadorNave
+onready var escudo:Escudo = $Escudo
 
 
 ## ATRIBUTOS
@@ -66,15 +69,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	 or event.is_action_released("mover_atras")):
 		motor_sfx.sonido_off()
 
+	# Control del escudo
+	if event.is_action_pressed("escudo") and not escudo.get_esta_activado():
+		escudo.activar()
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	# Para el manejo de la rotacion del RigidBody
 	apply_torque_impulse(dir_rotacion * potencia_rotacion)
 	# Para el manejo del empuje de un RigidBody (adelante/atras)
 	apply_central_impulse(empuje.rotated(rotation))
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_input()
 
 
@@ -141,6 +148,15 @@ func esta_input_activo() -> bool:
 		return false
 	
 	return true
+
+
+func recibir_danio(danio: float) -> void:
+	hitpoints -= danio
+
+	if hitpoints <= 0.0:
+		destruir()
+	
+	impacto_sfx.play()
 
 
 func destruir() -> void:
